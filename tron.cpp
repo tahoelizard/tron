@@ -1,6 +1,7 @@
 #include<iostream>
 using namespace std;
 
+
 int main(){
 	int disBig = 0;
 	cout << "How long are the directions? ";
@@ -9,13 +10,16 @@ int main(){
 	//make 
 	char* directions = new char [disBig];
 	//make grid
-	int arrayBig = disBig * disBig + 1; 
+	int arrayBig = disBig + disBig + 1; 
+	bool check = false; 
 	int** grid = new int* [arrayBig];
 	for(int i = 0; i < arrayBig; ++i){
 		grid[i] = new int[arrayBig];
+		for (int j= 0; j < arrayBig; j++){
+			grid[i][j]= 0;
+		}
 	}
 
-	//populate with 0's
     	
 	cout << "What are the directions?";
 	char buff;
@@ -23,44 +27,69 @@ int main(){
 		cin >> buff;
 		if (buff == 'n' || buff == 's' || buff == 'e' || buff == 'w'){
 			directions[counter] = buff;
-			cout << "here1";
 		}
 		else{
 			cout << "invalid direction" << endl; 
 		}
 	}
 
-	bool shouldContinue = true;
-	//get to logicing 
-	//while (shouldContinue == true){
+	int xCord = disBig;
+	int yCord = disBig;
+	grid[xCord][yCord]= 1;
 		for (int counter = 0; counter < disBig; counter++){
-			cout << "here2";
-
 			switch (directions[counter]) {
 	  			case 'n':
-	    		cout << "x is n";
+		    		yCord--;
+		    		if (grid[xCord][yCord] == 1){
+		    			check = true; 
+		    		} else{
+		    			grid[xCord][yCord]= 1;
+		    			cout << xCord << " and " << yCord << " set to 1" << endl; 
+		    		}
+
 	    		break;
 
 	  			case 's':
-	    		cout << "x is s";
+		    		yCord++;
+	    			if (grid[xCord][yCord] == 1){
+	    				check = true; 
+	    			} else{
+	    				grid[xCord][yCord]= 1;
+	    				cout << xCord << " and " << yCord << " set to 1" << endl; 
+	    			}
 	    		break;
 
 	    		case 'e':
-	    		cout << "x is e";
+	    			xCord++;
+	    			if (grid[xCord][yCord] == 1){
+	    				check = true; 
+	    			} else{
+	    				grid[xCord][yCord]= 1;
+	    				cout << xCord << " and " << yCord << " set to 1" << endl; 
+	    			}
 	    		break;
 
 	    		case 'w':
-	    		cout << "x is w";
+	    			xCord--;
+	    			if (grid[xCord][yCord] == 1){
+	    				check = true; 
+	    			} else{
+	    				grid[xCord][yCord]= 1;
+	    				cout << xCord << " and " << yCord << " set to 1" << endl; 
+	    			}
 	    		break;
 	  
 	  			default:
 	    		cout << "invalid direction";
 			}
-			//if(nextStep == 1){
-				//shouldContinue = false;
-			//}
 		}
-	//}
+
+	if (check == true){
+		cout << "colission found" << endl;
+	}
+	else{
+		cout << "No colision found" << endl;
+	}
 
 	delete directions; 
 	delete grid; 
